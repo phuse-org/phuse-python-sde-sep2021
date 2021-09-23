@@ -12,6 +12,7 @@ requests = "*"
 matplotlib = "*"
 python-dotenv = "*"
 lxml = "*"
+flat-table = "*"
 
 [dev-packages]
 
