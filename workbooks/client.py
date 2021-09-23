@@ -13,6 +13,18 @@ class LibraryClient:
         # use an in memory cache for requests
         self._cache = {}
 
+    def get_link(self, link):
+        """
+        Follow a link from a header
+        """
+        key = link.get('href')
+        if key not in self._cache:
+            results = self._client.get(f"{self.BASE_URL}{link.get('href')}")
+            if results.status_code != 200:
+                raise ValueError("Unable to get dataset", results.content)
+            self._cache[key] = results.json()
+        return self._cache[key]
+
     def get_ig_dataset_by_version(self, version: str, dataset: str):
         """
         Get a named domain by version
@@ -58,4 +70,14 @@ class LibraryClient:
             dt = self.get_product_tabulation()
             self._cache[key] = dt.get('_links').get('sdtm')            
         return self._cache[key]
-        
+
+    def get_sdtm_ct_package(self, version):
+        """
+        Get a set CT for SDTM
+        """
+        key = f"sdtmct_{version}"
+        if key not in self._cache:
+            # note, we can reuse this as applicable
+            results = self._client.get(f"{self.BASE_URL}/mdr/ct/packages/sdtmct-{version}")
+            self._cache[key] = results            
+        return self._cache[key]
