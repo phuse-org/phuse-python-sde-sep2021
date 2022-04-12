@@ -1,5 +1,8 @@
 # import the data handling library
 from optparse import Option
+import os
+from tkinter import E
+from turtle import st
 from urllib import request
 import pandas as pd
 from pandas import DataFrame
@@ -36,4 +39,20 @@ def load_cdiscpilot_dataset(domain_prefix: str) -> Optional[DataFrame]:
         return dataset
     return None
 
+
+def convert_cdiscpilot_dataset(domain_prefix: str, output_dir: str) -> Optional[DataFrame]:
+    """
+    load a CDISC Pilot Dataset from the GitHub site and write it out to a CSV file
+    @param domain_prefix: the Domain Prefix for the Domain (eg DM, VS)
+    @param output_dir: the directory into which we want to write the content
+    """
+    dataset = load_cdiscpilot_dataset(domain_prefix)
+    if dataset:
+        if os.path.exists(output_dir):
+            target_file = os.path.join(output_dir, f"{domain_prefix.lower()}.csv")
+            dataset.to_csv(target_file, index=False, header=True)
+        else:
+            print(f"{output_dir} does not exist")
+    else:
+        print(f"Unable to load dataset for {domain_prefix}")
 
