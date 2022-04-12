@@ -13,10 +13,10 @@ We recommend that you use Visual Studio Code as a client for the Workbooks
     * Windows - https://www.python.org/downloads/windows/ -> Windows Installer (64bit)
     * OSX - Install using homebrew (https://brew.sh/) -> `brew install python`
     * Linux - Follow your packaging environment guide (eg apt)
-3. Install Pipenv (a python environment management tool)
-    * `pip install --user pipenv`
+3. Install Poetry (a python environment management tool)
+    * `pip install --user poetry`
 4. Install the dependencies
-    * `pipenv install`
+    * `poetry install`
 5. Create a file called `.env` and in it put the following (replace `<token>` with your CDISC Library Token)
     `CDISC_LIBRARY_API_TOKEN=<token>`
 6. Open the project
