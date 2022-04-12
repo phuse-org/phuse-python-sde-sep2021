@@ -1,3 +1,5 @@
 .vscode
 .env
 temp.html
+.ipynb_checkpoints
+*.csv
