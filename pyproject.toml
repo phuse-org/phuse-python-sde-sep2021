@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "phuse-python-sde-sep2021"
+version = "0.1.0"
+description = "A Set of Workbooks for the PHUSE Single Day Event 2021 dealing with Data Manipulation using Python" 
+authors = ["Geoff Low <glow@mdsol.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+jupyterlab = "*"
+pandas = "*"
+psycopg2-binary = "*"
+jupyter = "*"
+requests = "*"
+matplotlib = "*"
+python-dotenv = "*"
+lxml = "*"
+flat-table = "*"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

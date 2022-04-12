@@ -1,2 +1,2 @@
 # start the jupyter process
-pipenv run jupyter lab
+poetry run jupyter lab
