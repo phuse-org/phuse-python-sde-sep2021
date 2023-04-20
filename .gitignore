@@ -3,3 +3,4 @@
 temp.html
 .ipynb_checkpoints
 *.csv
+*.pyc
