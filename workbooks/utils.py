@@ -1,12 +1,9 @@
 # import the data handling library
 from optparse import Option
 import os
-from tkinter import E
-from turtle import st
-from urllib import request
 import pandas as pd
 from pandas import DataFrame
-from typing import List, Optional
+from typing import Optional
 import urllib
 
 # define a prefix
