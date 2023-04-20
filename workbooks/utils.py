@@ -11,6 +11,7 @@ import urllib
 
 # define a prefix
 PREFIX = "https://github.com/phuse-org/phuse-scripts/raw/master/data/sdtm/cdiscpilot01/"
+PREFIX_UPDATED = "https://github.com/phuse-org/phuse-scripts/raw/master/data/sdtm/updated_cdiscpilot/"
 
 def check_link(url: str) -> bool:
     """
@@ -25,13 +26,16 @@ def check_link(url: str) -> bool:
     return status_code == 200
 
 
-def load_cdiscpilot_dataset(domain_prefix: str) -> Optional[DataFrame]:
+def load_cdiscpilot_dataset(domain_prefix: str, updated: bool = True) -> Optional[DataFrame]:
     """
     load a CDISC Pilot Dataset from the GitHub site
     @param domain_prefix: the Domain Prefix for the Domain (eg DM, VS)
     """
     # define the target for our read_sas directive
-    target = f"{PREFIX}{domain_prefix.lower()}.xpt"
+    if updated:
+        target = f"{PREFIX_UPDATED}{domain_prefix.lower()}.xpt"
+    else:
+        target = f"{PREFIX}{domain_prefix.lower()}.xpt"
     # make sure that the URL exists first
     if check_link(target):
         # let pandas work it out
@@ -40,13 +44,13 @@ def load_cdiscpilot_dataset(domain_prefix: str) -> Optional[DataFrame]:
     return None
 
 
-def convert_cdiscpilot_dataset(domain_prefix: str, output_dir: str) -> Optional[DataFrame]:
+def convert_cdiscpilot_dataset(domain_prefix: str, output_dir: str, updated: bool = True) -> Optional[DataFrame]:
     """
     load a CDISC Pilot Dataset from the GitHub site and write it out to a CSV file
     @param domain_prefix: the Domain Prefix for the Domain (eg DM, VS)
     @param output_dir: the directory into which we want to write the content
     """
-    dataset = load_cdiscpilot_dataset(domain_prefix)
+    dataset = load_cdiscpilot_dataset(domain_prefix, updated)
     if dataset:
         if os.path.exists(output_dir):
             target_file = os.path.join(output_dir, f"{domain_prefix.lower()}.csv")
