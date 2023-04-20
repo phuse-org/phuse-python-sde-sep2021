@@ -9,6 +9,7 @@ import urllib
 # define a prefix
 PREFIX = "https://github.com/phuse-org/phuse-scripts/raw/master/data/sdtm/cdiscpilot01/"
 PREFIX_UPDATED = "https://github.com/phuse-org/phuse-scripts/raw/master/data/sdtm/updated_cdiscpilot/"
+PREFIX_UPDATED_TWO = "https://github.com/phuse-org/phuse-scripts/raw/master/data/sdtm/TDF_SDTM_v1.0/"
 
 def check_link(url: str) -> bool:
     """
@@ -30,13 +31,16 @@ def load_cdiscpilot_dataset(domain_prefix: str, updated: bool = True) -> Optiona
     """
     # define the target for our read_sas directive
     if updated:
-        target = f"{PREFIX_UPDATED}{domain_prefix.lower()}.xpt"
+        target = f"{PREFIX_UPDATED_TWO}{domain_prefix.lower()}.xpt"
     else:
         target = f"{PREFIX}{domain_prefix.lower()}.xpt"
     # make sure that the URL exists first
     if check_link(target):
         # let pandas work it out
         dataset = pd.read_sas(target, encoding="utf-8")
+        # Coerce Date columns to datetime
+        for date_column in [x for x in dataset.columns if x.endswith("DTC")]:
+            dataset[date_column] = pd.to_datetime(dataset[date_column])
         return dataset
     return None
 
